@@ -4,9 +4,8 @@ import UIKit
 
 class DetailsModalViewController: UIViewController {
     
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero, style: .grouped)
     let contactsService = ContactsService()
-    
     
     var selectedContact: UserInfo?
     var similarContacts: [UserInfo] = []
@@ -26,7 +25,7 @@ class DetailsModalViewController: UIViewController {
         setuptableView()
         
     }
-
+    
     func setuptableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = Constants.Color.grayColor
@@ -37,10 +36,12 @@ class DetailsModalViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
     }
     
+    func closeModule() {
+        self.dismiss(animated: true)
+    }
 }
 
 extension DetailsModalViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -48,33 +49,6 @@ extension DetailsModalViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2 + similarContacts.count + 1
     }
-    
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        switch indexPath.row{
-//        case 0:
-//            let customCell = DetailsModelTableCell(style: .default, reuseIdentifier: nil)
-//            
-//            if let contact = selectedContact {
-//                customCell.configures(contact: contact)
-//            }
-//            
-//            return customCell
-//        case 1:
-//            let customCell = tableView.dequeueReusableCell(withIdentifier: "SimilarContactsTitleCell", for: indexPath) as! SimilarContactsTitleCell
-//            return customCell
-//        case 2:
-//            let customCell = tableView.dequeueReusableCell(withIdentifier: "SimilarContactsDetailsCell", for: indexPath) as! SimilarContactsDetailsCell
-//            
-//            let similarContact = similarContacts[indexPath.row - 2]
-//            customCell.configures(contact: similarContact)
-//            
-//            return customCell
-//        default:
-//            let customCell = tableView.dequeueReusableCell(withIdentifier: "ButtonCloseCell", for: indexPath) as! ButtonCloseCell
-//            return customCell
-//        }
-//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
@@ -93,6 +67,7 @@ extension DetailsModalViewController: UITableViewDataSource, UITableViewDelegate
             return customCell
         } else {
             let customCell = tableView.dequeueReusableCell(withIdentifier: "ButtonCloseCell", for: indexPath) as! ButtonCloseCell
+            customCell.closeButtonAction = closeModule
             return customCell
         }
     }
@@ -115,7 +90,7 @@ extension DetailsModalViewController: UITableViewDataSource, UITableViewDelegate
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: -34),
+            label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: -10),
             label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),
             label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),
             label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
@@ -136,7 +111,7 @@ extension DetailsModalViewController: UITableViewDataSource, UITableViewDelegate
         label.translatesAutoresizingMaskIntoConstraints = false
         
         footerView.addSubview(label)
-
+        
         label.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 27).isActive = true
         label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15).isActive = true
         label.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15).isActive = true
@@ -144,9 +119,8 @@ extension DetailsModalViewController: UITableViewDataSource, UITableViewDelegate
         
         return footerView
     }
-
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 20
     }
 }
