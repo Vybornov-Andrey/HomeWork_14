@@ -1,8 +1,16 @@
 
 import Foundation
+//typealias ContactSectionItems = (title: String, contacts: [UserInfo])
 
 class ContactsService {
-        
+//    func getSectionsInfo() -> [ContactSectionItems] {
+//        var contacs: [ContactSectionItems] = []
+//        allContactslist.forEach {
+//            contacs.append(ContactSectionItems(title: $0.name ,contacts: [$0]))
+//        }
+//        return contacs
+//    }
+    
     private var allContactslist: [UserInfo] = [
         .init(
             name: "Дмитрий",
